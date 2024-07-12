@@ -24,12 +24,12 @@
     </style>
 </head>
 <body class="bg-gray-900 text-white p-4">
-    <h1 class="text-2xl font-bold mb-4">Fasta Downloader</h1>
+    <h1 class="text-2xl font-bold mb-4">NCBI Nucleotide Downloader</h1>
     
-    <input type="text" id="codeInput" placeholder="Örn: CAAGRJ010006848.1" class="w-full p-2 mb-4 text-black rounded">
+    <input type="text" id="codeInput" placeholder="Örn: CAAGRJ010006848.1" class="w-full p-2 mb-4 text-black rounded" aria-label="Fasta kodu girin">
     
-    <button id="downloadBtn" class="bg-blue-600 text-white px-4 py-2 rounded w-full mb-4 flex items-center justify-center">
-        <span>Fatsal İndir</span>
+    <button id="downloadBtn" class="bg-blue-600 text-white px-4 py-2 rounded w-full mb-4 flex items-center justify-center" aria-live="polite">
+        <span>Download</span>
         <div id="loadingSpinner" class="spinner ml-2 hidden"></div>
     </button>
     

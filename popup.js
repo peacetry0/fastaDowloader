@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isLoading) {
             downloadBtn.disabled = true;
             loadingSpinner.classList.remove('hidden');
-            downloadBtn.querySelector('span').textContent = 'İndiriliyor...';
+            downloadBtn.querySelector('span').textContent = 'Downloading...';
         } else {
             downloadBtn.disabled = false;
             loadingSpinner.classList.add('hidden');
-            downloadBtn.querySelector('span').textContent = 'Fatsal İndir';
+            downloadBtn.querySelector('span').textContent = 'Download';
         }
     }
 
@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
             successMessage.textContent = '';
 
             fetch(`https://www.ncbi.nlm.nih.gov/nuccore/${code}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error('Invalid code or problem communicating with the NCBI server.');
+                    return response.text();
+                })
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
@@ -41,10 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         return fetch(downloadUrl);
                     } else {
-                        throw new Error('Gerekli meta etiketleri bulunamadı.');
+                        throw new Error('Required meta tags not found.');
                     }
                 })
-                .then(response => response.blob())
+                .then(response => {
+                    if (!response.ok) throw new Error('Could not download data .');
+                    return response.blob();
+                })
                 .then(blob => {
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -54,17 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
-                    successMessage.textContent = 'Dosya başarıyla indirildi!';
+                    successMessage.textContent = 'Data downloaded successfully!';
                 })
                 .catch(error => {
-                    errorMessage.textContent = error.message || 'Bir hata oluştu.';
-                    console.error('Hata:', error);
+                    errorMessage.textContent = error.message || 'Something went wrong .';
+                    console.error('Error:', error);
                 })
                 .finally(() => {
                     setLoading(false);
                 });
         } else {
-            errorMessage.textContent = 'Lütfen geçerli bir kod girin.';
+            errorMessage.textContent = 'Please enter a valid code .';
         }
     });
 });

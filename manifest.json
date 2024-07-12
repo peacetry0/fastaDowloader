@@ -2,12 +2,12 @@
   "manifest_version": 2,
   "name": "Fasta Downloader",
   "version": "1.0",
-  "description": "Fasta dosyalarını indirmek için bir eklenti",
-  "author": "Barış Yazman",
+  "description": "A plugin to download NCBI Nucleotide data in fasta format",
+  "author": "Baris Yazman",
   "homepage_url": "https://www.linkedin.com/in/bar%C4%B1%C5%9F-yazman-062927294/",
-
-  "permissions": ["activeTab","https://www.ncbi.nlm.nih.gov/"],
+  "permissions": ["activeTab", "https://www.ncbi.nlm.nih.gov/"],
   "browser_action": {
-    "default_popup": "popup.html"
+      "default_popup": "popup.html"
   }
+ 
 }
